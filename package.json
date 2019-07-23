@@ -1,0 +1,35 @@
+{
+	"name": "@creatartis/randomness",
+	"description": "Pseudo-random number generation functions and utilities.",
+	"keywords": [
+		"random",
+		"pseudorandom",
+		"linear congruential",
+		"mersenne twister"
+	],
+	"version": "0.0.1",
+	"author": {
+		"name": "Leonardo Val",
+		"email": "leonardo.val@creatartis.com"
+	},
+	"homepage": "http://creatartis.com",
+	"contributors": [],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "http://github.com/LeonardoVal/randomness.js"
+	},
+	"main": "build/randomness.min.js",
+	"files": [
+		"build",
+		"LICENSE.md"
+	],
+	"dependencies": {},
+	"devDependencies": {
+		"@creatartis/creatartis-grunt": "~0.0.16-beta",
+		"karma-chrome-launcher": "~1.0.1"
+	},
+	"scripts": {
+		"test": "grunt test"
+	}
+}
