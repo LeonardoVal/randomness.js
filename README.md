@@ -1,5 +1,7 @@
 ﻿# @creatartis/randomness.js
 
+[![npm version](https://badge.fury.io/js/%40creatartis%2Frandomness.svg)](https://badge.fury.io/js/%40creatartis%2Frandomness)
+
 Pseudo-random number generation functions and utilities for everything that 
 Javascript's own `Math.random()` falls short of covering, which is a lot. 
 
