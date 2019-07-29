@@ -1,7 +1,5 @@
 ﻿# @creatartis/randomness.js
 
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-
 Pseudo-random number generation functions and utilities for everything that 
 Javascript's own `Math.random()` falls short of covering, which is a lot. 
 
