@@ -1,19 +1,17 @@
-/** # Mersenne twister
- * 
- * The method `Randomness.mersenneTwister` returns a pseudorandom number 
- * generator constructor implemented with the 
- * [Mersenne Twister algorithm](http://en.wikipedia.org/wiki/Mersenne_twister#Pseudocode).
- */
-
 /** Bit operations in Javascript deal with signed 32 bit integers. This 
- * algorithm deals with unsigned 32 bit integers. That is why this function
- * is necessary.
+ * algorithm deals with unsigned 32 bit integers. That is why this function is 
+ * necessary.
+ * @ignore 
  */
 function unsigned(n) {
 	return n < 0 ? n + 0x100000000 : n;
 }
 
-
+/** Class for for pseudorandom number generator implemented with the
+ * [Mersenne Twister algorithm](http://en.wikipedia.org/wiki/Mersenne_twister#Pseudocode).
+ * 
+ * @see Randomness
+ */
 class MersenneTwister extends Randomness {
 	constructor(seed) {
 		super();
@@ -22,6 +20,7 @@ class MersenneTwister extends Randomness {
 		this.__index__ = 0;
 	}
 	
+	/** @ignore */
 	__generate__() {
 		let numbers = this.__numbers__;
 		if (this.__index__ === 0) {
@@ -36,6 +35,7 @@ class MersenneTwister extends Randomness {
 		return y / 0xFFFFFFFF;
 	}
 
+	/** @ignore */
 	static __initialize__(seed) {
 		let numbers = new Array(624),
 			last = seed;
@@ -47,6 +47,7 @@ class MersenneTwister extends Randomness {
 		return numbers;
 	}
 	
+	/** @ignore */
 	static __generate__(numbers) {
 		for(var i = 0; i < 624; ++i) {
 			var y = (numbers[i] & 0x80000000) | (numbers[(i+1) % 624] & 0x7FFFFFFF);
@@ -57,10 +58,11 @@ class MersenneTwister extends Randomness {
 		}
 	}
 
-	// ## Utilities ###########################################################
+	// Utilities //////////////////////////////////////////////////////////////
 	
 	/** Serialization and materialization using Sermat.
-	*/
+	 * @ignore
+	 */
 	static get __SERMAT__() {
 		return {
 			identifier: exports.__package__ +'.MersenneTwister',
