@@ -1,6 +1,7 @@
 ﻿// See __prologue__.js
-	exports.__SERMAT__ = { 
-		include: [Randomness, LinearCongruential, MersenneTwister]
-	};
-	return Object.freeze(exports);
-}
+exports.SERMAT = {
+  // eslint-disable-next-line no-undef
+  include: [Randomness, LinearCongruential, MersenneTwister],
+};
+
+export default Object.freeze(exports);

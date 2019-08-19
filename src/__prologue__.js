@@ -1,10 +1,5 @@
-﻿/** Package wrapper and layout.
-*/
-function __init__() { "use strict";
-// Library layout. /////////////////////////////////////////////////////////////////////////////////
-	var exports = {
-		__package__: 'creatartis-base',
-		__name__: 'base',
-		__init__: __init__,
-		__dependencies__: []
-	};
+﻿// Library layout.
+// eslint-disable-next-line no-unused-vars
+const exports = {
+  id: 'randomness',
+};
