@@ -7,7 +7,7 @@
     "linear congruential",
     "mersenne twister"
   ],
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "Leonardo Val",
     "email": "leonardo.val@creatartis.com"
@@ -19,7 +19,7 @@
     "type": "git",
     "url": "http://github.com/LeonardoVal/randomness.js"
   },
-  "main": "build/randomness.min.js",
+  "main": "build/randomness.js",
   "files": [
     "build",
     "LICENSE.md"
@@ -40,10 +40,12 @@
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^6.0.0",
+    "gulp-jest": "^4.0.3",
     "gulp-jsdoc3": "^2.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-terser": "^1.2.0",
+    "jest-cli": "^24.9.0",
     "karma": "^4.2.0",
     "karma-chrome-launcher": "~1.0.1",
     "parse-packagejson-name": "^1.0.1"
@@ -72,5 +74,13 @@
   "eslintIgnore": [
     "build/**/*.js",
     "Gulpfile.js"
-  ]
+  ],
+  "jest": {
+    "testPathIgnorePatterns": [
+      "node_modules/",
+      "src/",
+      "test/"
+    ],
+    "verbose": true
+  }
 }
