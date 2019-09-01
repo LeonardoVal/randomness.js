@@ -170,7 +170,7 @@ class Randomness {
    */
   static normalizeWeights(weightedValues) {
     let weightSum = 0;
-    for (const [, weight] of weightedValues) {
+    for (let [, weight] of weightedValues) {
       if (Number.isNaN(weight) || weight < 0) {
         throw new Error(`Cannot normalize with weight ${weight}!`);
       }
@@ -286,5 +286,3 @@ class Randomness {
     },
   }
 } // class Randomness
-
-exports.Randomness = Randomness;

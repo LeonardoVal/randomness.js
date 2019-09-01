@@ -73,5 +73,3 @@ class LinearCongruential extends Randomness {
     },
   }
 } // class LinearCongruential
-
-exports.LinearCongruential = LinearCongruential;

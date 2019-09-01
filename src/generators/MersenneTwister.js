@@ -76,5 +76,3 @@ class MersenneTwister extends Randomness {
     },
   }
 } // class MersenneTwister
-
-exports.MersenneTwister = MersenneTwister;
