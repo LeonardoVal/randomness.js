@@ -7,6 +7,7 @@ let DEFAULT_SINGLETON = null;
  * is that it cannot be seeded. This hinders its use for simulations and similar
  * purposes.
  */
+// eslint-disable-next-line no-unused-vars
 class Randomness {
   /** The `Randomness` instances are build with a `generator` function. This
    * is a function that is called without any parameters and returns a random
@@ -170,7 +171,7 @@ class Randomness {
    */
   static normalizeWeights(weightedValues) {
     let weightSum = 0;
-    for (let [, weight] of weightedValues) {
+    for (const [, weight] of weightedValues) {
       if (Number.isNaN(weight) || weight < 0) {
         throw new Error(`Cannot normalize with weight ${weight}!`);
       }
@@ -178,7 +179,7 @@ class Randomness {
     }
     const result = new Map();
     const { size } = weightedValues;
-    for (let [value, weight] of weightedValues) {
+    for (const [value, weight] of weightedValues) {
       result.set(value, weightSum === 0 ? 1 / size : weight / weightSum);
     }
     return result;
@@ -198,7 +199,7 @@ class Randomness {
    */
   weightedChoice(weightedValues, defaultValue) {
     let chance = this.random();
-    for (let [value, weight] of weightedValues) {
+    for (const [value, weight] of weightedValues) {
       chance -= weight;
       if (chance <= 1e-15) {
         return value;
@@ -233,7 +234,7 @@ class Randomness {
       let chance;
       for (let i = 0; i < n; i += 1) {
         chance = this.random(maxProb);
-        for (let [value, weight] of weightedValuesMap) {
+        for (const [value, weight] of weightedValuesMap) {
           chance -= weight;
           if (chance <= 0) {
             maxProb -= weight;

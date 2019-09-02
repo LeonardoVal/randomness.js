@@ -15,6 +15,7 @@ function unsigned(n) {
  * @see Randomness
  */
 /* global Randomness */
+// eslint-disable-next-line no-unused-vars
 class MersenneTwister extends Randomness {
   constructor(seed) {
     super();

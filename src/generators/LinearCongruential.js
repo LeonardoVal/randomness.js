@@ -5,6 +5,7 @@
  * @see Randomness
  */
 /* global Randomness */
+// eslint-disable-next-line no-unused-vars
 class LinearCongruential extends Randomness {
   /** Builds a linear congruential pseudo random number generator.
    *
