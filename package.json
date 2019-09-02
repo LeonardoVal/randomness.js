@@ -52,7 +52,8 @@
     "parse-packagejson-name": "^1.0.1"
   },
   "scripts": {
-    "test": "grunt test"
+    "build": "gulp build",
+    "test": "gulp test"
   },
   "eslintConfig": {
     "env": {
