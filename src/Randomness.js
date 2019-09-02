@@ -139,12 +139,13 @@ class Randomness {
    */
   split(n, from) {
     const source = [...from]; // Array conversion and shallow copy.
-    const size = source.length;
     let result = [];
-    for (let amount = Math.min(size, Math.max(+n, 0)); amount > 0; amount -= 1) {
-      result = result.concat(source.splice(this.randomInt(size), 1));
+    for (let amount = Math.max(n, 0); source.length > 0 && amount > 0; amount -= 1) {
+      const randomIndex = this.randomInt(source.length);
+      const spliced = source.splice(randomIndex, 1);
+      result = result.concat(spliced);
     }
-    return [result, from];
+    return [result, source];
   }
 
   /** Randomly shuffle the elements of a given array.
