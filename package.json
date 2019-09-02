@@ -37,6 +37,7 @@
     "eslint-plugin-import": "^2.18.2",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
+    "gulp-benchmark": "^1.1.1",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^6.0.0",
@@ -61,19 +62,15 @@
     "extends": [
       "airbnb-base"
     ],
-    "globals": {
-      "Atomics": "readonly",
-      "SharedArrayBuffer": "readonly"
-    },
-    "parser": "esprima",
+    "globals": {},
+    "parser": "babel-eslint",
     "parserOptions": {
       "ecmaVersion": 2018
     },
     "rules": {}
   },
   "eslintIgnore": [
-    "build/**/*.js",
-    "Gulpfile.js"
+    "build/**/*.js"
   ],
   "jest": {
     "testPathIgnorePatterns": [
