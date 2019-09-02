@@ -30,13 +30,15 @@ function testRandomGenerator(name, constructor) {
 }
 
 describe('Randomness', () => {
+  const TEST_COUNT = 31;
+
   it('core', () => {
     const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(typeof Randomness).toBe('function');
     expect(typeof (new Randomness()).generator).toBe('function');
     expect(DEFAULT).toBeDefined();
-    for (let i = 0; i < 30; i += 1) {
+    for (let i = 0; i < TEST_COUNT; i += 1) {
       const r = DEFAULT.random();
       expect(r >= 0 && r < 1).toBe(true);
     }
@@ -46,7 +48,7 @@ describe('Randomness', () => {
     const { Randomness } = randomness;
     const rand0 = new Randomness(() => 0);
     const rand1 = new Randomness(() => 1);
-    for (let i = 0; i < 30; i += 1) {
+    for (let i = 0; i < TEST_COUNT; i += 1) {
       expect(rand0.random()).toBe(0);
       expect(rand0.random(3)).toBe(0);
       expect(rand0.random(3, 7)).toBe(3);
@@ -60,7 +62,7 @@ describe('Randomness', () => {
     const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(typeof DEFAULT.random).toBe('function');
-    for (let i = 0; i < 30; i += 1) {
+    for (let i = 0; i < TEST_COUNT; i += 1) {
       const min = DEFAULT.random() * 10;
       const max = min + DEFAULT.random() * 10;
       let r = DEFAULT.random(max);
@@ -76,7 +78,7 @@ describe('Randomness', () => {
     const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(typeof DEFAULT.randomInt).toBe('function');
-    for (let i = 0; i < 30; i += 1) {
+    for (let i = 0; i < TEST_COUNT; i += 1) {
       const min = Math.floor(DEFAULT.random() * 10);
       const max = Math.floor(min + DEFAULT.random() * 10);
       let r = DEFAULT.randomInt(max);
@@ -94,7 +96,7 @@ describe('Randomness', () => {
     const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(typeof DEFAULT.randomBool).toBe('function');
-    for (let i = 0; i < 30; i += 1) {
+    for (let i = 0; i < TEST_COUNT; i += 1) {
       expect(DEFAULT.randomBool()).toBeOfType('boolean');
     }
     const rand0 = new Randomness(() => 0);
@@ -103,7 +105,7 @@ describe('Randomness', () => {
     // eslint-disable-next-line camelcase
     const rand0_6 = new Randomness(() => 0.6);
     const rand1 = new Randomness(() => 1);
-    for (let i = 0; i < 30; i += 1) {
+    for (let i = 0; i < TEST_COUNT; i += 1) {
       expect(rand0.randomBool()).toBe(true);
       expect(rand1.randomBool()).toBe(false);
       expect(rand0_4.randomBool()).toBe(true); // Default probability should be 0.5.
@@ -128,12 +130,12 @@ describe('Randomness', () => {
     expect(DEFAULT.choice({})).toBeUndefined();
 
     let test = [1, 2, 3, 4, 5];
-    for (let i = 0; i < 30; i += 1) {
+    for (let i = 0; i < TEST_COUNT; i += 1) {
       const choice = DEFAULT.choice(test);
       expect(test.indexOf(choice)).not.toBeLessThan(0);
     }
     test = 'abcde';
-    for (let i = 0; i < 30; i += 1) {
+    for (let i = 0; i < TEST_COUNT; i += 1) {
       const choice = DEFAULT.choice(test);
       expect(test.indexOf(choice)).not.toBeLessThan(0);
     }
@@ -141,7 +143,7 @@ describe('Randomness', () => {
       a: 1, b: 2, c: 3, d: 4, e: 5,
     };
     test = Object.entries(obj);
-    for (let i = 0; i < 30; i += 1) {
+    for (let i = 0; i < TEST_COUNT; i += 1) {
       const choice = DEFAULT.choice(test);
       expect(choice[1]).toBe(obj[choice[0]]);
     }
@@ -156,7 +158,7 @@ describe('Randomness', () => {
       '', [], 'a', [1], 'abc', [1, 2, 3, 4, 5],
     ].forEach((test) => {
       const testArray = [...test];
-      for (let i = 0; i < 30; i += 1) {
+      for (let i = 0; i < TEST_COUNT; i += 1) {
         const choices = DEFAULT.choices(i % (testArray.length + 1), testArray);
         expect(Array.isArray(choices)).toBe(true);
         choices.forEach((x) => {
@@ -171,17 +173,18 @@ describe('Randomness', () => {
     const { DEFAULT } = Randomness;
     expect(() => DEFAULT.split(undefined)).toThrow();
     expect(() => DEFAULT.split(null)).toThrow();
-
     [
       '', [], 'a', [1], 'abc', [1, 2, 3, 4, 5],
     ].forEach((test) => {
       const testArray = [...test];
-      for (let i = 0; i < 30; i += 1) {
-        const split = DEFAULT.split(i % (testArray.length + 1), test);
+      for (let i = 0; i < TEST_COUNT; i += 1) {
+        const n = i % (testArray.length + 1);
+        const split = DEFAULT.split(n, test);
         expect(split).toBeOfType(Array);
         expect(split.length).toBe(2);
         expect(split[0]).toBeOfType(Array);
-        expect(split[1]).toBeOfType(Array);
+        expect(split[0].length).toBe(n);
+        expect(split[1].length).toBe(testArray.length - n);
         split[0].forEach((x) => {
           expect(testArray).toContain(x);
           expect(split[1]).not.toContain(x);
@@ -199,12 +202,11 @@ describe('Randomness', () => {
     const { DEFAULT } = Randomness;
     expect(() => DEFAULT.shuffle(undefined)).toThrow();
     expect(() => DEFAULT.shuffle(null)).toThrow();
-
     [
       '', [], 'a', [1], 'abc', [1, 2, 3, 4, 5],
     ].forEach((test) => {
       const testArray = [...test];
-      for (let i = 0; i < 30; i += 1) {
+      for (let i = 0; i < TEST_COUNT; i += 1) {
         const shuffled = DEFAULT.shuffle(test);
         expect(Array.isArray(shuffled)).toBe(true);
         shuffled.forEach((x) => {
@@ -217,10 +219,8 @@ describe('Randomness', () => {
 
   it('normalizeWeights()', () => {
     const { Randomness } = randomness;
-    const { DEFAULT } = Randomness;
-    expect(() => DEFAULT.normalizeWeights(undefined)).toThrow();
-    expect(() => DEFAULT.normalizeWeights(null)).toThrow();
-
+    expect(() => Randomness.normalizeWeights(undefined)).toThrow();
+    expect(() => Randomness.normalizeWeights(null)).toThrow();
     [
       { input: {}, output: {} },
       { input: { a: 1 }, output: { a: 1 } },
@@ -234,10 +234,10 @@ describe('Randomness', () => {
     ].forEach((testCase) => {
       const input = Object.entries(testCase.input);
       if (testCase.fail) {
-        expect(() => DEFAULT.normalizeWeights(input)).toThrow();
+        expect(() => Randomness.normalizeWeights(input)).toThrow();
       } else {
         const output = Object.entries(testCase.output);
-        expect([...DEFAULT.normalizeWeights(input)])
+        expect([...Randomness.normalizeWeights(input)])
           .toEqual(output);
       }
     });
