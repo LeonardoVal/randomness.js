@@ -39,6 +39,18 @@ tasks.concat = function concat() {
     .pipe(gulp_concat(`${PACKAGE_NAME}.js`));
 };
 
+// Linting /////////////////////////////////////////////////////////////////////
+
+tasks.lint = function lint() {
+  return gulp.src(['src/**/*.js', 'test/specs/*.test.js'])
+    .pipe(gulp_eslint({
+      ...packageJSON.eslintConfig,
+      globals: [], // ESLint of gulp-eslint fails if `globals` is not an array.
+    }))
+    .pipe(gulp_eslint.formatEach('compact', process.stderr));
+  // FIXME .pipe(gulp_eslint.failAfterError());
+};
+
 // Transpilation ///////////////////////////////////////////////////////////////
 
 tasks.es8 = function es8() {
@@ -81,20 +93,8 @@ tasks.umd = function umd() {
     .pipe(gulp.dest('build/'));
 };
 
-tasks.build = gulp.series(tasks.clean,
+tasks.build = gulp.series(tasks.clean, tasks.lint,
   gulp.parallel(tasks.es8, tasks.commonjs, tasks.umd));
-
-// Linting /////////////////////////////////////////////////////////////////////
-
-tasks.lint = function lint() {
-  return gulp.src(['src/**/*.js', 'test/specs/*.test.js'])
-    .pipe(gulp_eslint({
-      ...packageJSON.eslintConfig,
-      globals: [], // ESLint of gulp-eslint fails if `globals` is not an array.
-    }))
-    .pipe(gulp_eslint.formatEach('compact', process.stderr));
-  // FIXME .pipe(gulp_eslint.failAfterError());
-};
 
 // Testing /////////////////////////////////////////////////////////////////////
 
@@ -109,24 +109,54 @@ tasks.specs = function specs() {
     .pipe(gulp.dest('build/__tests__'));
 };
 
-tasks.test_karma = function test_karma(done) {
-  new karma.Server({
-    configFile: `${__dirname}/test/karma.conf.js`,
-    singleRun: true,
-  }, done).start();
-};
-
 tasks.jest = function jest() {
-  gulp.src('build/**/*.js', { read: false })
-    .pipe(gulp_jest(packageJSON.jest));
+  // gulp.src('build/**/*.js', { read: false })
+  return gulp.src('build/__tests__')
+    .pipe(gulp_jest({
+      ...packageJSON.jest,
+    }));
 };
 
 tasks.test = gulp.series(tasks.specs, tasks.jest);
 
+const KARMA_CONFIG = {
+  basePath: '',
+  frameworks: ['jasmine'], // ['jasmine', 'requirejs'],
+  files: [
+    'build/__tests__/*.test.js',
+    { pattern: 'build/randomness.js', included: false },
+  ],
+  exclude: [],
+  preprocessors: {
+    'build/randomness.js': ['sourcemap'],
+  },
+  reporters: ['progress'],
+  port: 9876,
+  colors: true,
+  logLevel: 'INFO',
+  autoWatch: false,
+  singleRun: false,
+  concurrency: Infinity,
+};
+
+tasks.test_firefox = function test_firefox(done) {
+  new karma.Server({
+    ...KARMA_CONFIG,
+    browsers: ['Firefox'],
+  }, done).start();
+};
+
+tasks.test_chrome = function test_chrome(done) {
+  new karma.Server({
+    ...KARMA_CONFIG,
+    browsers: ['Chrome'],
+  }, done).start();
+};
+
 // Benchmarking ////////////////////////////////////////////////////////////////
 
 tasks.benchmark = function benchmark() {
-  gulp.src('build/perf/*.js', { read: false })
+  return gulp.src('build/perf/*.js', { read: false })
     .pipe(gulp_benchmark({
       reporters: benchmark.reporters.etalon('Suite'), // FIXME
     }));
@@ -154,5 +184,6 @@ tasks.jsdoc = function jsdoc() {
     .pipe(gulp_jsdoc(config));
 };
 
-tasks.default = gulp.series(tasks.build, tasks.lint, tasks.test, tasks.jsdoc);
-exports.default = tasks.default;
+tasks.default = gulp.series(tasks.build, tasks.test, tasks.jsdoc);
+
+Object.assign(exports, tasks);
