@@ -110,7 +110,6 @@ tasks.specs = function specs() {
 };
 
 tasks.jest = function jest() {
-  // gulp.src('build/**/*.js', { read: false })
   return gulp.src('build/__tests__')
     .pipe(gulp_jest({
       ...packageJSON.jest,
@@ -123,7 +122,8 @@ const KARMA_CONFIG = {
   basePath: '',
   frameworks: ['jasmine'], // ['jasmine', 'requirejs'],
   files: [
-    'build/__tests__/*.test.js',
+    'test/karma-tester.js',
+    { pattern: 'build/__tests__/*.test.js', included: false },
     { pattern: 'build/randomness.js', included: false },
   ],
   exclude: [],
@@ -133,7 +133,7 @@ const KARMA_CONFIG = {
   reporters: ['progress'],
   port: 9876,
   colors: true,
-  logLevel: 'INFO',
+  logLevel: 'DEBUG', // 'INFO',
   autoWatch: false,
   singleRun: false,
   concurrency: Infinity,
