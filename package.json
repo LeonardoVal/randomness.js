@@ -74,6 +74,9 @@
     "build/**/*.js"
   ],
   "jest": {
+    "setupFilesAfterEnv": [
+      "./test/jest-setup.js"
+    ],
     "testPathIgnorePatterns": [
       "node_modules/",
       "src/",
