@@ -2,7 +2,6 @@
 /* eslint-disable no-mixed-operators */
 /* eslint-disable import/no-unresolved */
 import randomness from '../randomness';
-import './setupTests';
 
 /** Generic pseudorandom generator testing procedure. See: <http://www.johndcook.com/Beautiful_Testing_ch10.pdf>.
 */
