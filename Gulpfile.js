@@ -9,7 +9,6 @@ const gulp_babel = require('gulp-babel');
 const gulp_rename = require('gulp-rename');
 const gulp_terser = require('gulp-terser');
 const gulp_eslint = require('gulp-eslint');
-const karma = require('karma');
 const gulp_jsdoc = require('gulp-jsdoc3');
 const gulp_jest = require('gulp-jest').default;
 const gulp_benchmark = require('gulp-benchmark');
@@ -118,41 +117,6 @@ tasks.jest = function jest() {
 
 tasks.test = gulp.series(tasks.specs, tasks.jest);
 
-const KARMA_CONFIG = {
-  basePath: '',
-  frameworks: ['jasmine'], // ['jasmine', 'requirejs'],
-  files: [
-    'test/karma-tester.js',
-    { pattern: 'build/__tests__/*.test.js', included: false },
-    { pattern: 'build/randomness.js', included: false },
-  ],
-  exclude: [],
-  preprocessors: {
-    'build/randomness.js': ['sourcemap'],
-  },
-  reporters: ['progress'],
-  port: 9876,
-  colors: true,
-  logLevel: 'DEBUG', // 'INFO',
-  autoWatch: false,
-  singleRun: false,
-  concurrency: Infinity,
-};
-
-tasks.test_firefox = function test_firefox(done) {
-  new karma.Server({
-    ...KARMA_CONFIG,
-    browsers: ['Firefox'],
-  }, done).start();
-};
-
-tasks.test_chrome = function test_chrome(done) {
-  new karma.Server({
-    ...KARMA_CONFIG,
-    browsers: ['Chrome'],
-  }, done).start();
-};
-
 // Benchmarking ////////////////////////////////////////////////////////////////
 
 tasks.benchmark = function benchmark() {
@@ -183,6 +147,8 @@ tasks.jsdoc = function jsdoc() {
   return gulp.src(['README.md', 'src/**/*.js'], { read: false })
     .pipe(gulp_jsdoc(config));
 };
+
+// Default /////////////////////////////////////////////////////////////////////
 
 tasks.default = gulp.series(tasks.build, tasks.test, tasks.jsdoc);
 
