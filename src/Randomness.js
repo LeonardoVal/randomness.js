@@ -288,3 +288,5 @@ class Randomness {
     },
   }
 } // class Randomness
+
+export default Randomness;
