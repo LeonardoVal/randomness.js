@@ -67,7 +67,8 @@
     "rules": {}
   },
   "eslintIgnore": [
-    "dist/**/*.js"
+    "dist/**/*.js",
+    "node_modules/**"
   ],
   "babel": {
     "plugins": [
