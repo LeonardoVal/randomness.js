@@ -63,7 +63,10 @@ tasks.esm = function esm() {
   return gulp.src('src/**/*.js')
     .pipe(gulp_sourcemaps.init())
     .pipe(gulp_babel(packageJSON.babel))
-    .pipe(gulp_terser())
+    .pipe(gulp_terser({
+      ecma: 8,
+      module: true,
+    }))
     .pipe(gulp_sourcemaps.write('.'))
     .pipe(gulp.dest('dist/'));
 };
