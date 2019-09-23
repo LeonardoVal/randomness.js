@@ -11,7 +11,7 @@ const gulp_terser = require('gulp-terser');
 const gulp_eslint = require('gulp-eslint');
 const gulp_jsdoc = require('gulp-jsdoc3');
 const gulp_jest = require('gulp-jest').default;
-const gulp_benchmark = require('gulp-benchmark');
+// const gulp_benchmark = require('gulp-benchmark');
 const packageJSON = require('./package.json');
 
 const PACKAGE_NAME = parsePackageName(packageJSON.name).fullName;
@@ -118,14 +118,14 @@ tasks.jest = function jest() {
 tasks.test = gulp.series(tasks.specs, tasks.jest);
 
 // Benchmarking ////////////////////////////////////////////////////////////////
-
+/* removed due to vulnerabilities in gulp-benchmark
 tasks.benchmark = function benchmark() {
   return gulp.src('build/perf/*.js', { read: false })
     .pipe(gulp_benchmark({
       reporters: benchmark.reporters.etalon('Suite'), // FIXME
     }));
 };
-
+*/
 // Documentation ///////////////////////////////////////////////////////////////
 
 tasks.jsdoc = function jsdoc() {
