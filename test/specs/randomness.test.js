@@ -1,7 +1,9 @@
 ﻿/* global describe, it, expect */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable import/no-unresolved */
-import { Randomness, LinearCongruential, MersenneTwister } from '../randomness';
+import { Randomness } from '../../src/Randomness';
+import { LinearCongruential } from '../../src/generators/LinearCongruential';
+import { MersenneTwister } from '../../src/generators/MersenneTwister';
 
 /** Generic pseudorandom generator testing procedure. See: <http://www.johndcook.com/Beautiful_Testing_ch10.pdf>.
 */
