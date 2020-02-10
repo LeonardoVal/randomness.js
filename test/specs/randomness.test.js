@@ -89,6 +89,19 @@ describe('Randomness', () => {
     }
   });
 
+  it('randoms()', () => {
+    const { DEFAULT } = Randomness;
+    for (let i = 0; i < TEST_COUNT; i += 1) {
+      const amount = DEFAULT.randomInt(1, TEST_COUNT);
+      const randoms = [...DEFAULT.randoms(amount)];
+      expect(randoms.length).toBe(amount);
+      // eslint-disable-next-line no-restricted-syntax
+      for (const n of randoms) {
+        expect(n >= 0 && n < 1).toBe(true);
+      }
+    }
+  });
+
   it('randomBool()', () => {
     const { DEFAULT } = Randomness;
     expect(typeof DEFAULT.randomBool).toBe('function');
