@@ -291,4 +291,4 @@ export class Randomness {
 
 export default {
   Randomness,
-}
+};

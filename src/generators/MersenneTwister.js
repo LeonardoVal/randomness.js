@@ -80,4 +80,4 @@ export class MersenneTwister extends Randomness {
 
 export default {
   MersenneTwister,
-}
+};

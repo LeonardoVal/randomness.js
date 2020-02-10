@@ -77,4 +77,4 @@ export class LinearCongruential extends Randomness {
 
 export default {
   LinearCongruential,
-}
+};
