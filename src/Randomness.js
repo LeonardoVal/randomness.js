@@ -106,7 +106,7 @@ export class Randomness {
   * randoms(n, x, y) {
     const amount = +n;
     for (let i = 0; i < amount; i += 1) {
-      yield this.random(this, x, y);
+      yield this.random(x, y);
     }
   }
 
