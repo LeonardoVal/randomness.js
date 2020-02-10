@@ -1,10 +1,12 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-bitwise */
 /** Bit operations in Javascript deal with signed 32 bit integers. This
  * algorithm deals with unsigned 32 bit integers. That is why this function is
  * necessary.
  * @ignore
  */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-bitwise */
+import { Randomness } from '../Randomness';
+
 function unsigned(n) {
   return n < 0 ? n + 0x100000000 : n;
 }
@@ -14,9 +16,7 @@ function unsigned(n) {
  *
  * @see Randomness
  */
-/* global Randomness */
-// eslint-disable-next-line no-unused-vars
-class MersenneTwister extends Randomness {
+export class MersenneTwister extends Randomness {
   constructor(seed) {
     super();
     this.seed = Number.isNaN(seed) ? Date.now() : Math.floor(seed);
@@ -77,3 +77,7 @@ class MersenneTwister extends Randomness {
     },
   }
 } // class MersenneTwister
+
+export default {
+  MersenneTwister,
+};

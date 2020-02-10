@@ -4,9 +4,9 @@
  *
  * @see Randomness
  */
-/* global Randomness */
-// eslint-disable-next-line no-unused-vars
-class LinearCongruential extends Randomness {
+import { Randomness } from '../Randomness';
+
+export class LinearCongruential extends Randomness {
   /** Builds a linear congruential pseudo random number generator.
    *
    * @param {number} m
@@ -74,3 +74,7 @@ class LinearCongruential extends Randomness {
     },
   }
 } // class LinearCongruential
+
+export default {
+  LinearCongruential,
+};

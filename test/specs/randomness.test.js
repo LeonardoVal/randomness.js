@@ -1,7 +1,9 @@
 ﻿/* global describe, it, expect */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable import/no-unresolved */
-import randomness from '../randomness';
+import { Randomness } from '../../src/Randomness';
+import { LinearCongruential } from '../../src/generators/LinearCongruential';
+import { MersenneTwister } from '../../src/generators/MersenneTwister';
 
 /** Generic pseudorandom generator testing procedure. See: <http://www.johndcook.com/Beautiful_Testing_ch10.pdf>.
 */
@@ -32,7 +34,6 @@ describe('Randomness', () => {
   const TEST_COUNT = 31;
 
   it('core', () => {
-    const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(typeof Randomness).toBe('function');
     expect(typeof (new Randomness()).generator).toBe('function');
@@ -44,7 +45,6 @@ describe('Randomness', () => {
   });
 
   it('constant generators', () => {
-    const { Randomness } = randomness;
     const rand0 = new Randomness(() => 0);
     const rand1 = new Randomness(() => 1);
     for (let i = 0; i < TEST_COUNT; i += 1) {
@@ -58,7 +58,6 @@ describe('Randomness', () => {
   });
 
   it('random()', () => {
-    const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(typeof DEFAULT.random).toBe('function');
     for (let i = 0; i < TEST_COUNT; i += 1) {
@@ -74,7 +73,6 @@ describe('Randomness', () => {
   });
 
   it('randomInt()', () => {
-    const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(typeof DEFAULT.randomInt).toBe('function');
     for (let i = 0; i < TEST_COUNT; i += 1) {
@@ -91,8 +89,20 @@ describe('Randomness', () => {
     }
   });
 
+  it('randoms()', () => {
+    const { DEFAULT } = Randomness;
+    for (let i = 0; i < TEST_COUNT; i += 1) {
+      const amount = DEFAULT.randomInt(1, TEST_COUNT);
+      const randoms = [...DEFAULT.randoms(amount)];
+      expect(randoms.length).toBe(amount);
+      // eslint-disable-next-line no-restricted-syntax
+      for (const n of randoms) {
+        expect(n >= 0 && n < 1).toBe(true);
+      }
+    }
+  });
+
   it('randomBool()', () => {
-    const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(typeof DEFAULT.randomBool).toBe('function');
     for (let i = 0; i < TEST_COUNT; i += 1) {
@@ -119,7 +129,6 @@ describe('Randomness', () => {
   });
 
   it('choice()', () => {
-    const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(typeof DEFAULT.choice).toBe('function');
     expect(() => DEFAULT.choice(undefined)).toThrow();
@@ -149,7 +158,6 @@ describe('Randomness', () => {
   });
 
   it('choices()', () => {
-    const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(() => DEFAULT.choices(undefined)).toThrow();
     expect(() => DEFAULT.choices(null)).toThrow();
@@ -168,7 +176,6 @@ describe('Randomness', () => {
   });
 
   it('split()', () => {
-    const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(() => DEFAULT.split(undefined)).toThrow();
     expect(() => DEFAULT.split(null)).toThrow();
@@ -197,7 +204,6 @@ describe('Randomness', () => {
   });
 
   it('shuffle()', () => {
-    const { Randomness } = randomness;
     const { DEFAULT } = Randomness;
     expect(() => DEFAULT.shuffle(undefined)).toThrow();
     expect(() => DEFAULT.shuffle(null)).toThrow();
@@ -217,7 +223,6 @@ describe('Randomness', () => {
   });
 
   it('normalizeWeights()', () => {
-    const { Randomness } = randomness;
     expect(() => Randomness.normalizeWeights(undefined)).toThrow();
     expect(() => Randomness.normalizeWeights(null)).toThrow();
     [
@@ -243,7 +248,6 @@ describe('Randomness', () => {
   });
 
   it('linearCongruential generators', () => {
-    const { LinearCongruential } = randomness;
     expect(LinearCongruential).toBeOfType('function');
 
     const nr = LinearCongruential.numericalRecipies;
@@ -260,7 +264,6 @@ describe('Randomness', () => {
   });
 
   it('Mersenne Twister generator', () => {
-    const { MersenneTwister } = randomness;
     expect(MersenneTwister).toBeOfType('function');
     testRandomGenerator('MersenneTwister',
       (seed) => new MersenneTwister(seed));

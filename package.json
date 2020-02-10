@@ -7,7 +7,7 @@
     "linear congruential",
     "mersenne twister"
   ],
-  "version": "0.0.2",
+  "version": "0.0.3-alpha",
   "author": {
     "name": "Leonardo Val",
     "email": "leonardo.val@creatartis.com"
@@ -19,34 +19,14 @@
     "type": "git",
     "url": "http://github.com/LeonardoVal/randomness.js"
   },
-  "main": "build/randomness.js",
+  "main": "dist/randomness.js",
+  "module": "dist/index.js",
   "files": [
-    "build",
-    "LICENSE.md"
+    "dist/"
   ],
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-transform-modules-commonjs": "^7.5.0",
-    "@babel/plugin-transform-modules-umd": "^7.2.0",
-    "@creatartis/creatartis-grunt": "~0.0.16-beta",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.2.2",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-clean": "^0.4.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-eslint": "^6.0.0",
-    "gulp-jest": "^4.0.3",
-    "gulp-jsdoc3": "^2.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-terser": "^1.2.0",
-    "jest-cli": "^24.9.0",
-    "parse-packagejson-name": "^1.0.1"
+    "@creatartis/creatartis-build": "0.0.2"
   },
   "scripts": {
     "build": "gulp build",
@@ -68,17 +48,36 @@
     "rules": {}
   },
   "eslintIgnore": [
-    "build/**/*.js"
+    "dist/**/*.js",
+    "node_modules/**"
   ],
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  },
   "jest": {
     "setupFilesAfterEnv": [
-      "./test/jest-setup.js"
+      "./node_modules/@creatartis/creatartis-build/dist/jest-setup.js"
     ],
     "testPathIgnorePatterns": [
       "node_modules/",
       "src/",
-      "test/"
+      "dist/"
     ],
+    "transform": {
+      "\\.jsx?$": "babel-jest"
+    },
     "verbose": true
   }
 }
