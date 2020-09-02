@@ -1,6 +1,6 @@
-import { Randomness } from './Randomness';
-import { LinearCongruential } from './generators/LinearCongruential';
-import { MersenneTwister } from './generators/MersenneTwister';
+import Randomness from './Randomness';
+import LinearCongruential from './generators/LinearCongruential';
+import MersenneTwister from './generators/MersenneTwister';
 
 const id = 'randomness';
 const SERMAT = {
@@ -9,14 +9,6 @@ const SERMAT = {
 
 // eslint-disable-next-line import/prefer-default-export
 export {
-  id,
-  Randomness,
-  LinearCongruential,
-  MersenneTwister,
-  SERMAT,
-};
-
-export default {
   id,
   Randomness,
   LinearCongruential,

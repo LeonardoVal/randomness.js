@@ -3,9 +3,7 @@
  * necessary.
  * @ignore
  */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-bitwise */
-import { Randomness } from '../Randomness';
+import Randomness from '../Randomness';
 
 function unsigned(n) {
   return n < 0 ? n + 0x100000000 : n;
@@ -16,7 +14,7 @@ function unsigned(n) {
  *
  * @see Randomness
  */
-export class MersenneTwister extends Randomness {
+export default class MersenneTwister extends Randomness {
   constructor(seed) {
     super();
     this.seed = Number.isNaN(seed) ? Date.now() : Math.floor(seed);
@@ -77,7 +75,3 @@ export class MersenneTwister extends Randomness {
     },
   }
 } // class MersenneTwister
-
-export default {
-  MersenneTwister,
-};
