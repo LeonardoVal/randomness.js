@@ -7,7 +7,7 @@
     "linear congruential",
     "mersenne twister"
   ],
-  "version": "0.0.3-alpha",
+  "version": "0.1.0",
   "author": {
     "name": "Leonardo Val",
     "email": "leonardo.val@creatartis.com"
@@ -26,46 +26,26 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "@creatartis/creatartis-build": "0.0.2"
+    "@creatartis/creatartis-build": "0.2.0"
   },
   "scripts": {
     "build": "gulp build",
     "test": "gulp test"
   },
+  "babel": {
+    "extends": "./node_modules/@creatartis/creatartis-build/dist/babel-config.js"
+  },
   "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es6": true
-    },
-    "extends": [
-      "airbnb-base"
-    ],
-    "globals": {},
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "ecmaVersion": 2018
-    },
-    "rules": {}
+    "extends": "./node_modules/@creatartis/creatartis-build/dist/eslint-config.js",
+    "rules": {
+      "no-bitwise": 0,
+      "no-param-reassign": 0
+    }
   },
   "eslintIgnore": [
-    "dist/**/*.js",
-    "node_modules/**"
+    "dist/",
+    "node_modules/"
   ],
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "current"
-          }
-        }
-      ]
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-class-properties"
-    ]
-  },
   "jest": {
     "setupFilesAfterEnv": [
       "./node_modules/@creatartis/creatartis-build/dist/jest-setup.js"
