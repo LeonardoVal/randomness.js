@@ -12,4 +12,5 @@ dist/
 docs/docker/
 docs/jsdoc/
 docs/jsdoc-conf.json
+test/specs/coverage/
 npm-debug.log
