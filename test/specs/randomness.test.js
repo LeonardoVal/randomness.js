@@ -1,9 +1,6 @@
-﻿/* global describe, it, expect */
-/* eslint-disable no-mixed-operators */
-/* eslint-disable import/no-unresolved */
-import { Randomness } from '../../src/Randomness';
-import { LinearCongruential } from '../../src/generators/LinearCongruential';
-import { MersenneTwister } from '../../src/generators/MersenneTwister';
+import Randomness from '../../src/Randomness';
+import LinearCongruential from '../../src/generators/LinearCongruential';
+import MersenneTwister from '../../src/generators/MersenneTwister';
 
 /** Generic pseudorandom generator testing procedure. See: <http://www.johndcook.com/Beautiful_Testing_ch10.pdf>.
 */
@@ -95,7 +92,6 @@ describe('Randomness', () => {
       const amount = DEFAULT.randomInt(1, TEST_COUNT);
       const randoms = [...DEFAULT.randoms(amount)];
       expect(randoms.length).toBe(amount);
-      // eslint-disable-next-line no-restricted-syntax
       for (const n of randoms) {
         expect(n >= 0 && n < 1).toBe(true);
       }

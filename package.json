@@ -29,8 +29,9 @@
     "@creatartis/creatartis-build": "0.2.0"
   },
   "scripts": {
-    "build": "gulp build",
-    "test": "gulp test"
+    "lint": "npx creatartis-build lint",
+    "build": "npx creatartis-build lint build test",
+    "test": "npx creatartis-build test"
   },
   "babel": {
     "extends": "./node_modules/@creatartis/creatartis-build/dist/babel-config.js"
@@ -39,7 +40,9 @@
     "extends": "./node_modules/@creatartis/creatartis-build/dist/eslint-config.js",
     "rules": {
       "no-bitwise": 0,
-      "no-param-reassign": 0
+      "no-mixed-operators": 0,
+      "no-param-reassign": 0,
+      "no-restricted-syntax": 0
     }
   },
   "eslintIgnore": [
