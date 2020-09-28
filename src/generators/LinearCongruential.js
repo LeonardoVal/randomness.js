@@ -4,9 +4,9 @@
  *
  * @see Randomness
  */
-import { Randomness } from '../Randomness';
+import Randomness from '../Randomness';
 
-export class LinearCongruential extends Randomness {
+export default class LinearCongruential extends Randomness {
   /** Builds a linear congruential pseudo random number generator.
    *
    * @param {number} m
@@ -74,7 +74,3 @@ export class LinearCongruential extends Randomness {
     },
   }
 } // class LinearCongruential
-
-export default {
-  LinearCongruential,
-};
