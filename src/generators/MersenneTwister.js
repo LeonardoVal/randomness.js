@@ -1,10 +1,10 @@
+import Randomness from '../Randomness';
+
 /** Bit operations in Javascript deal with signed 32 bit integers. This
  * algorithm deals with unsigned 32 bit integers. That is why this function is
  * necessary.
  * @ignore
- */
-import Randomness from '../Randomness';
-
+*/
 function unsigned(n) {
   return n < 0 ? n + 0x100000000 : n;
 }
@@ -12,9 +12,10 @@ function unsigned(n) {
 /** Class for for pseudorandom number generator implemented with the
  * [Mersenne Twister algorithm](http://en.wikipedia.org/wiki/Mersenne_twister#Pseudocode).
  *
- * @see Randomness
- */
-export default class MersenneTwister extends Randomness {
+ * @class
+ * @extends Randomness
+*/
+class MersenneTwister extends Randomness {
   constructor(seed) {
     super();
     this.seed = Number.isNaN(seed) ? Date.now() : Math.floor(seed);
@@ -64,7 +65,7 @@ export default class MersenneTwister extends Randomness {
 
   /** Serialization and materialization using Sermat.
    * @ignore
-   */
+  */
   static SERMAT = {
     identifier: `${exports.id}.MersenneTwister`,
     serializer(obj) {
@@ -75,3 +76,5 @@ export default class MersenneTwister extends Randomness {
     },
   }
 } // class MersenneTwister
+
+export default MersenneTwister;

@@ -1,19 +1,20 @@
+import Randomness from '../Randomness';
+
 /** Class for pseudorandom number generator implemented with the
  * [linear congruential algorithm](http://en.wikipedia.org/wiki/Linear_congruential_generator).
  * It also contain the following shortcuts to build common variants.
  *
- * @see Randomness
- */
-import Randomness from '../Randomness';
-
-export default class LinearCongruential extends Randomness {
+ * @class
+ * @extends Randomness
+*/
+class LinearCongruential extends Randomness {
   /** Builds a linear congruential pseudo random number generator.
    *
    * @param {number} m
    * @param {number} a
    * @param {number} c
    * @param {number} seed
-   */
+  */
   constructor(m, a, c, seed) {
     const i = Number.isNaN(seed) ? Date.now() : Math.floor(seed);
     super();
@@ -33,7 +34,7 @@ export default class LinearCongruential extends Randomness {
    *
    * @param {number} seed - The seed to use with the pseudorandom generator.
    * @return {LinearCongruential}
-   */
+  */
   static numericalRecipies(seed) {
     return new LinearCongruential(0xFFFFFFFF, 1664525, 1013904223, seed);
   }
@@ -43,7 +44,7 @@ export default class LinearCongruential extends Randomness {
    *
    * @param {number} seed - The seed to use with the pseudorandom generator.
    * @return {LinearCongruential}
-   */
+  */
   static borlandC(seed) {
     return new LinearCongruential(0xFFFFFFFF, 22695477, 1, seed);
   }
@@ -54,7 +55,7 @@ export default class LinearCongruential extends Randomness {
    *
    * @param {number} seed - The seed to use with the pseudorandom generator.
    * @return {LinearCongruential}
-   */
+  */
   static glibc(seed) {
     return new LinearCongruential(0xFFFFFFFF, 1103515245, 12345, seed);
   }
@@ -63,7 +64,7 @@ export default class LinearCongruential extends Randomness {
 
   /** Serialization and materialization using Sermat.
    * @ignore
-   */
+  */
   static SERMAT = {
     identifier: `${exports.id}.LinearCongruential`,
     serializer(obj) {
@@ -74,3 +75,5 @@ export default class LinearCongruential extends Randomness {
     },
   }
 } // class LinearCongruential
+
+export default LinearCongruential;
