@@ -8,7 +8,7 @@ let DEFAULT_SINGLETON = null;
  * purposes.
  */
 // eslint-disable-next-line no-unused-vars
-export default class Randomness {
+class Randomness {
   /** The `Randomness` instances are build with a `generator` function. This
    * is a function that is called without any parameters and returns a random
    * number between 0 (inclusive) and 1 (exclusive). If none is given the
@@ -288,3 +288,5 @@ export default class Randomness {
     },
   }
 } // class Randomness
+
+export default Randomness;

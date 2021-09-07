@@ -1,4 +1,5 @@
-﻿# @creatartis/randomness.js
+﻿@creatartis/randomness.js
+=========================
 
 [![npm version](https://badge.fury.io/js/%40creatartis%2Frandomness.svg)](https://badge.fury.io/js/%40creatartis%2Frandomness)
 
