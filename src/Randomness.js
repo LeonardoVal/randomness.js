@@ -1,3 +1,5 @@
+import { packageName } from './utils';
+
 /* eslint-disable no-restricted-syntax */
 /** @ignore */
 let DEFAULT_SINGLETON = null;
@@ -14,11 +16,11 @@ class Randomness {
    * number between 0 (inclusive) and 1 (exclusive). If none is given the
    * standard `Math.random´ is used.
    *
-   * @param {function} [generator] - Random generator function.
+   * @param {function} [generator=Math.random] - Random generator function.
    */
-  constructor(generator) {
+  constructor(generator = undefined) {
     if (typeof generator === 'function') {
-      this.generator = generator;
+      Object.defineProperty(this, 'generator', { value: generator });
     } else if (typeof generator !== 'undefined') {
       throw new TypeError(`Unsupported random number generator ${generator}!`);
     }
@@ -275,15 +277,12 @@ class Randomness {
   /** Serialization and materialization using Sermat.
    * @ignore
    */
-  static SERMAT = {
-    identifier: `${exports.id}.Randomness`,
+  static __SERMAT__ = {
+    identifier: `${packageName}.Randomness`,
     serializer(obj) {
-      if (Object.hasOwnProperty.call(obj, 'generator')) {
-        return [obj.generator];
-      }
-      return [];
+      return obj.generator === Randomness.prototype.generator ? [] : [obj.generator];
     },
-    materializer(obj, args) {
+    materializer(_obj, args) {
       return args && (args.length < 1 ? new Randomness() : new Randomness(args[0]));
     },
   }
