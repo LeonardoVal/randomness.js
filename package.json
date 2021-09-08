@@ -21,9 +21,9 @@
   },
   "main": "randomness.js",
   "module": "index.js",
-  "dependencies": {},
   "devDependencies": {
-    "@creatartis/creatartis-build": "0.2.4-beta"
+    "@creatartis/creatartis-build": "0.2.4-beta",
+    "sermat": "^0.1.0"
   },
   "scripts": {
     "lint": "npx creatartis-build lint",
