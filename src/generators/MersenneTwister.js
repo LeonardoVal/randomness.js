@@ -1,3 +1,4 @@
+import { packageName } from '../utils';
 import Randomness from '../Randomness';
 
 /** Bit operations in Javascript deal with signed 32 bit integers. This
@@ -66,12 +67,12 @@ class MersenneTwister extends Randomness {
   /** Serialization and materialization using Sermat.
    * @ignore
   */
-  static SERMAT = {
-    identifier: `${exports.id}.MersenneTwister`,
+  static __SERMAT__ = {
+    identifier: `${packageName}.MersenneTwister`,
     serializer(obj) {
       return [obj.seed];
     },
-    materializer(obj, args) {
+    materializer(_obj, args) {
       return args && (new MersenneTwister(args[0]));
     },
   }

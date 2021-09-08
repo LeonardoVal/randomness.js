@@ -1,3 +1,4 @@
+import { packageName } from '../utils';
 import Randomness from '../Randomness';
 
 /** Class for pseudorandom number generator implemented with the
@@ -18,7 +19,7 @@ class LinearCongruential extends Randomness {
   constructor(m, a, c, seed) {
     const i = Number.isNaN(seed) ? Date.now() : Math.floor(seed);
     super();
-    this.arguments = [m, a, c, seed];
+    Object.defineProperty(this, 'arguments', { value: [m, a, c, seed] });
     this.current = i;
   }
 
@@ -65,12 +66,12 @@ class LinearCongruential extends Randomness {
   /** Serialization and materialization using Sermat.
    * @ignore
   */
-  static SERMAT = {
-    identifier: `${exports.id}.LinearCongruential`,
+  static __SERMAT__ = {
+    identifier: `${packageName}.LinearCongruential`,
     serializer(obj) {
       return obj.arguments;
     },
-    materializer(obj, args) {
+    materializer(_obj, args) {
       return args && (new LinearCongruential(...args));
     },
   }
