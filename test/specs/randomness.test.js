@@ -1,6 +1,4 @@
 import Randomness from '../../src/Randomness';
-import LinearCongruential from '../../src/generators/LinearCongruential';
-import MersenneTwister from '../../src/generators/MersenneTwister';
 import { testRandomGenerator } from './test-utils';
 
 describe('Randomness', () => {
@@ -219,25 +217,7 @@ describe('Randomness', () => {
     });
   });
 
-  it('linearCongruential generators', () => {
-    expect(LinearCongruential).toBeOfType('function');
-
-    const nr = LinearCongruential.numericalRecipies;
-    expect(nr).toBeOfType('function');
-    testRandomGenerator('LinearCongruential.numericalRecipies', nr);
-
-    const bc = LinearCongruential.borlandC;
-    expect(bc).toBeOfType('function');
-    testRandomGenerator('LinearCongruential.borlandC', bc);
-
-    const gc = LinearCongruential.glibc;
-    expect(gc).toBeOfType('function');
-    testRandomGenerator('LinearCongruential.glibc', gc);
-  });
-
-  it('Mersenne Twister generator', () => {
-    expect(MersenneTwister).toBeOfType('function');
-    testRandomGenerator('MersenneTwister',
-      (seed) => new MersenneTwister(seed));
+  it('works like a random number generator', () => {
+    testRandomGenerator('Randomness', () => new Randomness());
   });
 }); // describe 'Randomness'
