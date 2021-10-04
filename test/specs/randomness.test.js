@@ -1,4 +1,6 @@
 import Randomness from '../../src/Randomness';
+import packageJson from '../../package.json';
+import { packageName } from '../../src/utils';
 import { testRandomGenerator } from './test-utils';
 
 describe('Randomness', () => {
@@ -13,6 +15,7 @@ describe('Randomness', () => {
       const r = DEFAULT.random();
       expect(r >= 0 && r < 1).toBe(true);
     }
+    expect(packageName).toEqual(packageJson.name.replace(/@creatartis\//, ''));
   });
 
   it('constant generators', () => {

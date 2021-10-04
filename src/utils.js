@@ -1,7 +1,2 @@
-import { name } from '../package.json';
-
-export const packageName = name.replace(/@creatartis\//, '');
-
-export default {
-  packageName,
-};
+// eslint-disable-next-line import/prefer-default-export
+export const packageName = 'randomness';
