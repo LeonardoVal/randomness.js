@@ -1,36 +1,5 @@
-import { Sermat } from 'sermat';
 import Randomness from '../../src/Randomness';
-import LinearCongruential from '../../src/generators/LinearCongruential';
-import MersenneTwister from '../../src/generators/MersenneTwister';
-
-/** Generic pseudorandom generator testing procedure. See: <http://www.johndcook.com/Beautiful_Testing_ch10.pdf>.
-*/
-function testRandomGenerator(name, constructor) {
-  const seeds = [123, 123456, 978654, (new Date()).getTime()];
-  const SAMPLE_COUNT = 100;
-  seeds.forEach((seed) => {
-    const generator = constructor(seed);
-    const values = [];
-    for (let i = 0; i < SAMPLE_COUNT; i += 1) {
-      const value = generator.random();
-      values.push(value);
-      // Range tests.
-      expect(value).not.toBeLessThan(0);
-      expect(value).toBeLessThan(1);
-    }
-    values.sort((x, y) => x - y);
-    const dPlus = values.reduce(
-      (max, value, i) => Math.max(max, (i + 1) / SAMPLE_COUNT - value),
-      -Infinity,
-    );
-    const dMinus = values.reduce(
-      (max, value, i) => Math.max(max, value - i / SAMPLE_COUNT),
-      -Infinity,
-    );
-    const dCritical = 1.63 / Math.sqrt(SAMPLE_COUNT); // alpha 1%
-    expect(Math.max(dPlus, dMinus)).toBeLessThan(dCritical);
-  });
-}
+import { testRandomGenerator } from './test-utils';
 
 describe('Randomness', () => {
   const TEST_COUNT = 31;
@@ -248,49 +217,7 @@ describe('Randomness', () => {
     });
   });
 
-  it('linearCongruential generators', () => {
-    expect(LinearCongruential).toBeOfType('function');
-
-    const nr = LinearCongruential.numericalRecipies;
-    expect(nr).toBeOfType('function');
-    testRandomGenerator('LinearCongruential.numericalRecipies', nr);
-
-    const bc = LinearCongruential.borlandC;
-    expect(bc).toBeOfType('function');
-    testRandomGenerator('LinearCongruential.borlandC', bc);
-
-    const gc = LinearCongruential.glibc;
-    expect(gc).toBeOfType('function');
-    testRandomGenerator('LinearCongruential.glibc', gc);
-  });
-
-  it('Mersenne Twister generator', () => {
-    expect(MersenneTwister).toBeOfType('function');
-    testRandomGenerator('MersenneTwister',
-      (seed) => new MersenneTwister(seed));
-  });
-
-  it('Serialization with Sermat', () => {
-    const packageName = 'randomness';
-    const seed = 7489153;
-    const sermat = new Sermat({
-      include: [Randomness, LinearCongruential, MersenneTwister],
-    });
-    [
-      [Randomness.DEFAULT, 'Randomness()'],
-      [new Randomness(), 'Randomness()'],
-      [LinearCongruential.borlandC(seed),
-        `LinearCongruential(${0xFFFFFFFF},${22695477},${1},${seed})`],
-      [LinearCongruential.glibc(seed),
-        `LinearCongruential(${0xFFFFFFFF},${1103515245},${12345},${seed})`],
-      [LinearCongruential.numericalRecipies(seed),
-        `LinearCongruential(${0xFFFFFFFF},${1664525},${1013904223},${seed})`],
-      [new MersenneTwister(seed), `MersenneTwister(${seed})`],
-    ].forEach(([obj, serialization]) => {
-      expect(sermat.ser(obj)).toBe(`${packageName}.${serialization}`);
-      const obj2 = sermat.sermat(obj);
-      expect(sermat.ser(obj2)).toBe(`${packageName}.${serialization}`);
-    });
-    expect(() => sermat.ser(new Randomness(() => 1))).toThrow();
+  it('works like a random number generator', () => {
+    testRandomGenerator('Randomness', () => new Randomness());
   });
 }); // describe 'Randomness'

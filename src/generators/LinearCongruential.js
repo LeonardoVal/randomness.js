@@ -69,7 +69,7 @@ class LinearCongruential extends Randomness {
   static __SERMAT__ = {
     identifier: `${packageName}.LinearCongruential`,
     serializer(obj) {
-      return obj.arguments;
+      return [...obj.arguments];
     },
     materializer(_obj, args) {
       return args && (new LinearCongruential(...args));
