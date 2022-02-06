@@ -17,6 +17,10 @@ function unsigned(n) {
  * @extends Randomness
 */
 class MersenneTwister extends Randomness {
+  static get name() {
+    return 'MersenneTwister';
+  }
+
   constructor(seed) {
     super();
     this.seed = Number.isNaN(seed) ? Date.now() : Math.floor(seed);

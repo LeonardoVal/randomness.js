@@ -9,6 +9,10 @@ import Randomness from '../Randomness';
  * @extends Randomness
 */
 class LinearCongruential extends Randomness {
+  static get name() {
+    return 'LinearCongruential';
+  }
+
   /** Builds a linear congruential pseudo random number generator.
    *
    * @param {number} m
