@@ -10,6 +10,7 @@ describe('Randomness', () => {
     const { DEFAULT } = Randomness;
     expect(typeof Randomness).toBe('function');
     expect(typeof (new Randomness()).generator).toBe('function');
+    expect(() => new Randomness('error!')).toThrow();
     expect(DEFAULT).toBeDefined();
     for (let i = 0; i < TEST_COUNT; i += 1) {
       const r = DEFAULT.random();
@@ -204,18 +205,57 @@ describe('Randomness', () => {
       { input: { a: 1, b: 0 }, output: { a: 1, b: 0 } },
       { input: { a: 1, b: 1 }, output: { a: 0.5, b: 0.5 } },
       { input: { a: 1, b: 3 }, output: { a: 0.25, b: 0.75 } },
+      { input: { a: 0, b: 0 }, output: { a: 0.5, b: 0.5 } },
       { input: { a: 1, b: 2, c: 1 }, output: { a: 0.25, b: 0.5, c: 0.25 } },
       // Fail with negative weights.
       { fail: true, input: { a: -1 } },
       { fail: true, input: { a: 1, b: -0.5 } },
     ].forEach((testCase) => {
-      const input = Object.entries(testCase.input);
+      const input = new Map(Object.entries(testCase.input));
       if (testCase.fail) {
         expect(() => Randomness.normalizeWeights(input)).toThrow();
       } else {
         const output = Object.entries(testCase.output);
-        expect([...Randomness.normalizeWeights(input)])
-          .toEqual(output);
+        expect([...Randomness.normalizeWeights(input)]).toEqual(output);
+      }
+    });
+  });
+
+  it('weightedChoice()', () => {
+    const { DEFAULT } = Randomness;
+    expect(() => DEFAULT.weightedChoice(undefined)).toThrow();
+    expect(() => DEFAULT.weightedChoice(null)).toThrow();
+    [
+      { a: 1, b: 0 },
+      { a: 0.5, b: 0.4, c: 0.1 },
+    ].forEach((choices) => {
+      const choiceMap = new Map(Object.entries(choices));
+      const choiceValues = Object.entries(choices)
+        .filter(([, p]) => p > 0).map(([v]) => v);
+      for (let i = 0; i < TEST_COUNT; i += 1) {
+        expect(choiceValues).toContain(DEFAULT.weightedChoice(choiceMap));
+      }
+    });
+    expect(() => DEFAULT.weightedChoice(new Map())).toThrow();
+    expect(DEFAULT.weightedChoice(new Map(), 'default')).toBe('default');
+  });
+
+  it('weightedChoices()', () => {
+    const { DEFAULT } = Randomness;
+    expect([...DEFAULT.weightedChoices(0, new Map())]).toEqual([]);
+    expect([...DEFAULT.weightedChoices(-1, new Map())]).toEqual([]);
+    [
+      { a: 1, b: 0 },
+      { a: 0.5, b: 0.4, c: 0.1 },
+    ].forEach((choices) => {
+      const choiceMap = new Map(Object.entries(choices));
+      const choiceValues = Object.entries(choices)
+        .filter(([, p]) => p > 0).map(([v]) => v);
+      for (let n = 1; n < choiceValues.length; n += 1) {
+        const values = [...DEFAULT.weightedChoices(n, choiceMap)];
+        values.forEach((value) => {
+          expect(choiceValues).toContain(value);
+        });
       }
     });
   });

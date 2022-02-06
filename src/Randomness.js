@@ -174,7 +174,7 @@ class Randomness {
    */
   static normalizeWeights(weightedValues) {
     let weightSum = 0;
-    for (const [, weight] of weightedValues) {
+    for (const [, weight] of weightedValues.entries()) {
       if (Number.isNaN(weight) || weight < 0) {
         throw new Error(`Cannot normalize with weight ${weight}!`);
       }
@@ -182,7 +182,7 @@ class Randomness {
     }
     const result = new Map();
     const { size } = weightedValues;
-    for (const [value, weight] of weightedValues) {
+    for (const [value, weight] of weightedValues.entries()) {
       result.set(value, weightSum === 0 ? 1 / size : weight / weightSum);
     }
     return result;
@@ -202,7 +202,7 @@ class Randomness {
    */
   weightedChoice(weightedValues, defaultValue) {
     let chance = this.random();
-    for (const [value, weight] of weightedValues) {
+    for (const [value, weight] of weightedValues.entries()) {
       chance -= weight;
       if (chance <= 1e-15) {
         return value;
@@ -221,23 +221,16 @@ class Randomness {
    * @param {integer} n - The amount of values required.
    * @param {Map<T,number>} weightedValues - A Map that defines both the set
    *   of values to choose from, and each of these values' probabilities.
-   * @param {T} defaultValue - A default value to return if the random
-   *   selection fails. This can happen when the given probabilities do not
-   *   add up to 1.
-   * @returns {T} The randomly selected value.
-   * @throws {Error} Raised when random selection fails and no default value
-   *   is given.
+   * @yields {T} - The randomly selected values.
    */
   * weightedChoices(n, weightedValues) {
-    if (n >= weightedValues.size) {
-      yield* weightedValues.values();
-    } else {
+    if (n > 0) {
       const weightedValuesMap = new Map(weightedValues); // Shallow copy.
       let maxProb = 1.0;
       let chance;
       for (let i = 0; i < n; i += 1) {
         chance = this.random(maxProb);
-        for (const [value, weight] of weightedValuesMap) {
+        for (const [value, weight] of weightedValuesMap.entries()) {
           chance -= weight;
           if (chance <= 0) {
             maxProb -= weight;
