@@ -52,19 +52,5 @@
   "eslintIgnore": [
     "dist/",
     "node_modules/"
-  ],
-  "jest": {
-    "setupFilesAfterEnv": [
-      "./node_modules/@creatartis/creatartis-build/dist/jest-setup.js"
-    ],
-    "testPathIgnorePatterns": [
-      "node_modules/",
-      "src/",
-      "dist/"
-    ],
-    "transform": {
-      "\\.jsx?$": "babel-jest"
-    },
-    "verbose": true
-  }
+  ]
 }
