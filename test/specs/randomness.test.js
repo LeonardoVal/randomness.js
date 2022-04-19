@@ -70,9 +70,9 @@ describe('Randomness', () => {
       const amount = DEFAULT.randomInt(1, TEST_COUNT);
       const randoms = [...DEFAULT.randoms(amount)];
       expect(randoms.length).toBe(amount);
-      for (const n of randoms) {
+      randoms.forEach((n) => {
         expect(n >= 0 && n < 1).toBe(true);
-      }
+      });
     }
   });
 

@@ -43,10 +43,7 @@
   "eslintConfig": {
     "extends": "./node_modules/@creatartis/creatartis-build/dist/eslint-config.js",
     "rules": {
-      "no-bitwise": 0,
-      "no-mixed-operators": 0,
-      "no-param-reassign": 0,
-      "no-restricted-syntax": 0
+      "no-bitwise": 0
     }
   },
   "eslintIgnore": [

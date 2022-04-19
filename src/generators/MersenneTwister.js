@@ -59,8 +59,10 @@ class MersenneTwister extends Randomness {
   static generate(numbers) {
     for (let i = 0; i < 624; i += 1) {
       const y = (numbers[i] & 0x80000000) | (numbers[(i + 1) % 624] & 0x7FFFFFFF);
+      // eslint-disable-next-line no-param-reassign
       numbers[i] = unsigned(numbers[(i + 397) % 624] ^ (y * 2));
       if ((y & 1) !== 0) {
+        // eslint-disable-next-line no-param-reassign
         numbers[i] = unsigned(numbers[i] ^ 0x9908B0DF);
       }
     }
